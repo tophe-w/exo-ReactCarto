@@ -15,7 +15,6 @@ export default function Map() {
   const marker = useRef(null);
   const marker2 = useRef(null);
 
-
   useEffect(() => {
     if (map.current) return;
 
@@ -25,7 +24,7 @@ export default function Map() {
       center: [lng, lat],
       zoom: zoom,
     });
-    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
     marker.current = new maplibregl.Marker({ color: "#383EE1" })
       .setLngLat([lng, lat])
@@ -50,16 +49,25 @@ export default function Map() {
 
   return (
     <div className="map-wrap">
-       <a href="https://www.coordonnees-gps.fr/" target="_blank" rel="noreferrer">Find your adress <img src="/emplacement.png" alt="point" className="icone" /> </a>
+      <a
+        href="https://www.coordonnees-gps.fr/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Find your adress{" "}
+        <img src="/emplacement.png" alt="point" className="icone" />{" "}
+      </a>
       <div className="markers">
         <div>
           <h2>Blue Marker</h2>
+          <label>Longitude</label>
           <input
             type="number"
             value={lng}
             onChange={(e) => setLng(parseFloat(e.target.value))}
             placeholder="Longitude"
           />
+          <label>Latitude</label>
           <input
             type="number"
             value={lat}
@@ -69,12 +77,14 @@ export default function Map() {
         </div>
         <div>
           <h2>Black Marker</h2>
+          <label>Longitude</label>
           <input
             type="number"
             value={lng2}
             onChange={(e) => setLng2(parseFloat(e.target.value))}
             placeholder="Longitude"
           />
+          <label>Latitude</label>
           <input
             type="number"
             value={lat2}
@@ -82,7 +92,6 @@ export default function Map() {
             placeholder="Latitude"
           />
         </div>
-       
       </div>
       <div ref={mapContainer} className="map" />
     </div>
