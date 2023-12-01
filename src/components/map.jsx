@@ -15,6 +15,7 @@ export default function Map() {
   const marker = useRef(null);
   const marker2 = useRef(null);
 
+
   useEffect(() => {
     if (map.current) return;
 
@@ -24,6 +25,7 @@ export default function Map() {
       center: [lng, lat],
       zoom: zoom,
     });
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
     marker.current = new maplibregl.Marker({ color: "#383EE1" })
       .setLngLat([lng, lat])
@@ -48,37 +50,41 @@ export default function Map() {
 
   return (
     <div className="map-wrap">
+       <a href="https://www.coordonnees-gps.fr/" target="_blank" rel="noreferrer">Find your adress <img src="/emplacement.png" alt="point" className="icone" /> </a>
+      <div className="markers">
+        <div>
+          <h2>Blue Marker</h2>
+          <input
+            type="number"
+            value={lng}
+            onChange={(e) => setLng(parseFloat(e.target.value))}
+            placeholder="Longitude"
+          />
+          <input
+            type="number"
+            value={lat}
+            onChange={(e) => setLat(parseFloat(e.target.value))}
+            placeholder="Latitude"
+          />
+        </div>
+        <div>
+          <h2>Black Marker</h2>
+          <input
+            type="number"
+            value={lng2}
+            onChange={(e) => setLng2(parseFloat(e.target.value))}
+            placeholder="Longitude"
+          />
+          <input
+            type="number"
+            value={lat2}
+            onChange={(e) => setLat2(parseFloat(e.target.value))}
+            placeholder="Latitude"
+          />
+        </div>
+       
+      </div>
       <div ref={mapContainer} className="map" />
-      <div>
-        <h2>Marker 1</h2>
-        <input
-          type="number"
-          value={lng}
-          onChange={(e) => setLng(parseFloat(e.target.value))}
-          placeholder="Longitude"
-        />
-        <input
-          type="number"
-          value={lat}
-          onChange={(e) => setLat(parseFloat(e.target.value))}
-          placeholder="Latitude"
-        />
-      </div>
-      <div>
-        <h2>Marker 2</h2>
-        <input
-          type="number"
-          value={lng2}
-          onChange={(e) => setLng2(parseFloat(e.target.value))}
-          placeholder="Longitude"
-        />
-        <input
-          type="number"
-          value={lat2}
-          onChange={(e) => setLat2(parseFloat(e.target.value))}
-          placeholder="Latitude"
-        />
-      </div>
     </div>
   );
 }
