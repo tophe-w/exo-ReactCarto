@@ -6,15 +6,12 @@ import "./map.css";
 const ZOOM = 8;
 const API_KEY = "nMRnsGMXjAaVfcwJhzLn";
 
-export default function Map() {
+export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, setLng2 } ) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(1.8815349);
-  const [lat, setLat] = useState(48.4158051);
-  const [lng2, setLng2] = useState(2.330041);
-  const [lat2, setLat2] = useState(48.8688897);
   const marker = useRef(null);
   const marker2 = useRef(null);
+
 
   useEffect(() => {
     if (map.current) return;
@@ -47,6 +44,8 @@ export default function Map() {
       marker2.current.setLngLat([lng2, lat2]);
     }
   }, [lng2, lat2]);
+
+  
 
   return (
     <div className="map-wrap">
