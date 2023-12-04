@@ -3,6 +3,9 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./map.css";
 
+const ZOOM = 8;
+const API_KEY = "nMRnsGMXjAaVfcwJhzLn";
+
 export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -10,8 +13,6 @@ export default function Map() {
   const [lat, setLat] = useState(48.4158051);
   const [lng2, setLng2] = useState(2.330041);
   const [lat2, setLat2] = useState(48.8688897);
-  const [zoom] = useState(8);
-  const [API_KEY] = useState("nMRnsGMXjAaVfcwJhzLn");
   const marker = useRef(null);
   const marker2 = useRef(null);
 
@@ -22,7 +23,7 @@ export default function Map() {
       container: mapContainer.current,
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
       center: [lng, lat],
-      zoom: zoom,
+      zoom: ZOOM,
     });
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
@@ -33,16 +34,16 @@ export default function Map() {
     marker2.current = new maplibregl.Marker({ color: "#000" })
       .setLngLat([lng2, lat2])
       .addTo(map.current);
-  }, [API_KEY, lng, lat, lng2, lat2, zoom]);
+  }, [API_KEY, lng, lat, lng2, lat2, ZOOM]);
 
   useEffect(() => {
-    if (marker.current) {
+    if (marker.current && !isNaN(lng) && !isNaN(lat)) {
       marker.current.setLngLat([lng, lat]);
     }
   }, [lng, lat]);
 
   useEffect(() => {
-    if (marker2.current) {
+    if (marker2.current && !isNaN(lng2) && !isNaN(lat2)) {
       marker2.current.setLngLat([lng2, lat2]);
     }
   }, [lng2, lat2]);
