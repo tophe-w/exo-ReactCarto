@@ -59,7 +59,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
       </a>
       <div className="markers">
         <div>
-          <h2>Blue Marker</h2>
+          <h2 style={{color : "#383EE1"}}>Blue Marker</h2>
           <label>Longitude</label>
           <input
             type="number"
