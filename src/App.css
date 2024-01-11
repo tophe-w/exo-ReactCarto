@@ -22,8 +22,10 @@
  }
  .weatherSwitch{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: column-reverse;
     align-items: center;
-    margin-top: 20px;
+    height:50%;
+    margin: auto;
+
  }

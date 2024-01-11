@@ -23,8 +23,8 @@ export default function Weather({ lat, lng}){
     if (weatherData) {
         return (
             <div className="weather">
-                <h1>Weather à {weatherData.name}</h1>
-                <div>
+                <h1>{weatherData.name}</h1>
+                <div className="info">
                     <p>Température : {weatherData.main.temp}°C</p>
                     <p>Condition: {weatherData.weather[0].main}</p>
                 </div>

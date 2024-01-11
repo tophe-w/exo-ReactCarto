@@ -3,7 +3,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 70%;
   height: calc(
     100vh - 100px
   ); /* calculate height of the screen minus the heading */
@@ -43,4 +43,12 @@ a {
   margin: auto;
   border-radius: 5px;
   box-shadow: 0 0 10px #000000;
+}
+.blueMarker ,.blackMarker{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  margin-bottom: 20px;
 }

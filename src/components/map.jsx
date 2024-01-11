@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./map.css";
@@ -31,7 +31,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
     marker2.current = new maplibregl.Marker({ color: "#000" })
       .setLngLat([lng2, lat2])
       .addTo(map.current);
-  }, [API_KEY, lng, lat, lng2, lat2, ZOOM]);
+  }, []);
 
   useEffect(() => {
     if (marker.current && !isNaN(lng) && !isNaN(lat)) {
@@ -58,7 +58,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
         <img src="/emplacement.png" alt="point" className="icone" />{" "}
       </a>
       <div className="markers">
-        <div>
+        <div className="blueMarker">
           <h2 style={{color : "#383EE1"}}>Blue Marker</h2>
           <label>Longitude</label>
           <input
@@ -66,7 +66,8 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
             value={lng}
             onChange={(e) => setLng(parseFloat(e.target.value))}
             placeholder="Longitude"
-          />
+          /> 
+          <br/>
           <label>Latitude</label>
           <input
             type="number"
@@ -75,7 +76,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
             placeholder="Latitude"
           />
         </div>
-        <div>
+        <div className="blackMarker">
           <h2>Black Marker</h2>
           <label>Longitude</label>
           <input
@@ -84,6 +85,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
             onChange={(e) => setLng2(parseFloat(e.target.value))}
             placeholder="Longitude"
           />
+          <br/>
           <label>Latitude</label>
           <input
             type="number"
