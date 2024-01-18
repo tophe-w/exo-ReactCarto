@@ -1,24 +1,32 @@
 import React, { useRef, useEffect } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import "./map.css";
+import "./Map.css";
 
-const ZOOM = 8;
+const ZOOM = 10;
 const API_KEY = "nMRnsGMXjAaVfcwJhzLn";
 
-export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, setLng2 } ) {
+export default function Map({
+  lat,
+  lng,
+  setLat,
+  setLng,
+  lat2,
+  lng2,
+  setLat2,
+  setLng2,
+}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const marker = useRef(null);
   const marker2 = useRef(null);
-
 
   useEffect(() => {
     if (map.current) return;
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      style: ` https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
       center: [lng, lat],
       zoom: ZOOM,
     });
@@ -45,8 +53,6 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
     }
   }, [lng2, lat2]);
 
-  
-
   return (
     <div className="map-wrap">
       <a
@@ -59,15 +65,15 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
       </a>
       <div className="markers">
         <div className="blueMarker">
-          <h2 style={{color : "#383EE1"}}>Blue Marker</h2>
+          <h2 style={{ color: "#383EE1" }}>Blue Marker</h2>
           <label>Longitude</label>
           <input
             type="number"
             value={lng}
             onChange={(e) => setLng(parseFloat(e.target.value))}
             placeholder="Longitude"
-          /> 
-          <br/>
+          />
+          <br />
           <label>Latitude</label>
           <input
             type="number"
@@ -85,7 +91,7 @@ export default function Map({ lat, lng, setLat, setLng, lat2, lng2, setLat2, set
             onChange={(e) => setLng2(parseFloat(e.target.value))}
             placeholder="Longitude"
           />
-          <br/>
+          <br />
           <label>Latitude</label>
           <input
             type="number"
