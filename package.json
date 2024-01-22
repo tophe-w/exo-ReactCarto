@@ -22,8 +22,11 @@
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.23.5",
+    "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/react": "^17.0.75",
     "babel-loader": "^8.3.0",
     "css-loader": "^1.0.0",
     "react": "^16.5.2",

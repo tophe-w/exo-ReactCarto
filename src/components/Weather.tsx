@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from "react";
 import './weather.css';
 
-export default function Weather({ lat, lng}){
-    const [weatherData, setWeatherData] = useState(null);
+
+interface WeatherProps{
+    lat: number;
+    lng: number;
+
+}
+interface WeatherData {
+  name: string;
+  main: {
+    temp: number;
+  };
+  weather: {
+    main: string;
+  }[];
+}
+
+const Weather: React.FC<WeatherProps> =({ lat, lng}) => {
+    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   
   
    
@@ -12,7 +28,7 @@ export default function Weather({ lat, lng}){
             const apiUrl = `${process.env.REACT_APP_API_URL}/weather?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
             fetch(apiUrl)
             .then(response => response.json())
-            .then(data => {
+            .then((data: WeatherData) => {
                 console.log("Données pour coordonnées :", data);
                 setWeatherData(data);
             })
@@ -40,3 +56,4 @@ export default function Weather({ lat, lng}){
         );
     }
 }
+export default Weather;
