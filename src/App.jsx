@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Map from "./components/Map.jsx";
 import "./App.css";
-import Weather from "./components/Weather.jsx";
+import Weather from "./components/Weather.tsx";
 import Switch from "./components/Switch.jsx";
 
 function App() {

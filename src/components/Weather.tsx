@@ -33,7 +33,7 @@ export default function Weather({ lat, lng}){
     } else {
         return (
             <div className="weather">
-               
+                
                 <h1>Weather</h1>
                 <p>Aucune donnée météorologique disponible pour les coordonnées spécifiées.</p>
             </div>
