@@ -1,7 +1,12 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import "./switch.css";
 
-const Switch = ({ label, onChange }) => {
+interface SwitchProps {
+  label: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Switch: React.FC<SwitchProps>  = ({ label, onChange }) => {
   return (
     <div className="container">
       {label}{" "}

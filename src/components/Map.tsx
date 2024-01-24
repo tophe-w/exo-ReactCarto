@@ -3,10 +3,21 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.css";
 
-const ZOOM = 10;
-const API_KEY = "nMRnsGMXjAaVfcwJhzLn";
+const ZOOM :number = 10;
+const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
 
-export default function Map({
+interface MapProps {
+  lat: number;
+  lng: number;
+  setLat: React.Dispatch<React.SetStateAction<number>>;
+  setLng: React.Dispatch<React.SetStateAction<number>>;
+  lat2: number;
+  lng2: number;
+  setLat2: React.Dispatch<React.SetStateAction<number>>;
+  setLng2: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Map: React.FC<MapProps> =({
   lat,
   lng,
   setLat,
@@ -15,18 +26,21 @@ export default function Map({
   lng2,
   setLat2,
   setLng2,
-}) {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const marker = useRef(null);
-  const marker2 = useRef(null);
+}) => {
+ const mapContainer = useRef<HTMLDivElement | null>(null);
+ const map = useRef<maplibregl.Map | null>(null);
+ const marker = useRef<maplibregl.Marker | null>(null);
+ const marker2 = useRef<maplibregl.Marker | null>(null);
 
   useEffect(() => {
-    if (map.current) return;
+    if (!mapContainer.current) {
+      console.log("mapContainer.current is null");
+     return};
+   
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: ` https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
       center: [lng, lat],
       zoom: ZOOM,
     });
@@ -105,3 +119,4 @@ export default function Map({
     </div>
   );
 }
+export default Map;

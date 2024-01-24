@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar.tsx";
-import Map from "./components/Map.jsx";
+import Map from "./components/Map.tsx";
 import "./App.css";
 import Weather from "./components/Weather.tsx";
-import Switch from "./components/Switch.jsx";
+import Switch from "./components/Switch.tsx";
 
 function App() {
   const [lat, setLat] = useState(48.4158051);
@@ -12,7 +12,7 @@ function App() {
   const [lng2, setLng2] = useState(2.330041);
   const [useBlackMarker, setUseBlackMarker] = useState(false);
 
-  const handleSwitchChange = (e) => {
+  const handleSwitchChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
     setUseBlackMarker(e.target.checked);
   };
 
