@@ -14,22 +14,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jsx|js)$/,
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-          },
-        ],
-      },
-      {
-        test: /\.(tsx|ts)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-          },
-        ],
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.css$/i,
@@ -37,7 +26,7 @@ module.exports = {
       },
     ],
   },
-  
+  resolve: { extensions: [".js", ".jsx", ".ts", ".tsx"] },
   plugins: [
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(process.env),

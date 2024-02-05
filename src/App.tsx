@@ -19,7 +19,7 @@ function App() {
   const coords = useBlackMarker ? { lat: lat2, lng: lng2 } : { lat, lng };
 
   return (
-    <div className="App">
+    <div className="App" >
       <Navbar />
       <div className="mapWeather">
         <Map
