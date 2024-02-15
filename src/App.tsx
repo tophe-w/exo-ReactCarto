@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React ,{ useState, ChangeEvent } from "react";
 import Navbar from "./components/Navbar.tsx";
 import Map from "./components/Map.tsx";
 import "./App.css";
@@ -12,14 +12,14 @@ function App() {
   const [lng2, setLng2] = useState(2.330041);
   const [useBlackMarker, setUseBlackMarker] = useState(false);
 
-  const handleSwitchChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
-    setUseBlackMarker(e.target.checked);
+  const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setUseBlackMarker(event.target.checked);
   };
 
   const coords = useBlackMarker ? { lat: lat2, lng: lng2 } : { lat, lng };
 
   return (
-    <div className="App" >
+    <div className="App">
       <Navbar />
       <div className="mapWeather">
         <Map

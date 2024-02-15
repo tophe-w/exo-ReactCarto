@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 module.exports = {
   entry: {
-    main: "./src/index.jsx",
+    main: "./src/Index.tsx",
   },
   output: {
     filename: "bundle.js",

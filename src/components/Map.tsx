@@ -3,7 +3,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.css";
 
-const ZOOM :number = 10;
+const ZOOM: number = 10;
 const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
 
 interface MapProps {
@@ -17,7 +17,7 @@ interface MapProps {
   setLng2: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Map: React.FC<MapProps> =({
+const Map: React.FC<MapProps> = ({
   lat,
   lng,
   setLat,
@@ -27,16 +27,15 @@ const Map: React.FC<MapProps> =({
   setLat2,
   setLng2,
 }) => {
- const mapContainer = useRef<HTMLDivElement | null>(null);
- const map = useRef<maplibregl.Map | null>(null);
- const marker = useRef<maplibregl.Marker | null>(null);
- const marker2 = useRef<maplibregl.Marker | null>(null);
+  const mapContainer = useRef<HTMLDivElement | null>(null);
+  const map = useRef<maplibregl.Map | null>(null);
+  const marker = useRef<maplibregl.Marker | null>(null);
+  const marker2 = useRef<maplibregl.Marker | null>(null);
 
   useEffect(() => {
     if (!mapContainer.current) {
-      console.log("mapContainer.current is null");
-     return};
-   
+      return;
+    }
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
@@ -44,7 +43,10 @@ const Map: React.FC<MapProps> =({
       center: [lng, lat],
       zoom: ZOOM,
     });
-    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+    map.current.addControl(
+      new maplibregl.NavigationControl({ showCompass: true }),
+      "top-right"
+    );
 
     marker.current = new maplibregl.Marker({ color: "#383EE1" })
       .setLngLat([lng, lat])
@@ -118,5 +120,5 @@ const Map: React.FC<MapProps> =({
       <div ref={mapContainer} className="map" />
     </div>
   );
-}
+};
 export default Map;

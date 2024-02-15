@@ -2,12 +2,13 @@
   "name": "sdk_carto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "index.tsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
     "start": "webpack serve --open --mode development",
-    "build:prod": "webpack --node-env=production",
-    "build:dev": "webpack --node-env=development"
+    "build:prod": "npm run type-check && webpack --node-env=production",
+    "build:dev": "npm run type-check && webpack --node-env=development"
   },
   "repository": {
     "type": "git",
@@ -26,12 +27,14 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@types/react": "^17.0.75",
+    "@types/react-dom": "^18.2.18",
     "babel-loader": "^8.3.0",
     "css-loader": "^6.9.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11",
     "style-loader": "^3.3.4",
+    "typescript": "^5.3.3",
     "webpack": "^5.90.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
@@ -39,7 +42,6 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^2.4.0",
-    "moment": "^2.29.4"
+    "maplibre-gl": "^2.4.0"
   }
 }
