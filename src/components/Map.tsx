@@ -1,36 +1,32 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.css";
 
 const ZOOM: number = 10;
 const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
+const initialViewState = {
+  lat: 48,
+  lng: 1.8,
+  zoom: 3.5,
+};
 
 interface MapProps {
   lat: number;
   lng: number;
   setLat: React.Dispatch<React.SetStateAction<number>>;
   setLng: React.Dispatch<React.SetStateAction<number>>;
-  lat2: number;
-  lng2: number;
-  setLat2: React.Dispatch<React.SetStateAction<number>>;
-  setLng2: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Map: React.FC<MapProps> = ({
-  lat,
-  lng,
-  setLat,
-  setLng,
-  lat2,
-  lng2,
-  setLat2,
-  setLng2,
-}) => {
+
+
+const Map: React.FC<MapProps> = ({ lat, lng, setLat, setLng }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const marker = useRef<maplibregl.Marker | null>(null);
-  const marker2 = useRef<maplibregl.Marker | null>(null);
+  const markerCoordinates = useRef<{ lat: number; lng: number }>({
+    lat: initialViewState.lat,
+    lng: initialViewState.lng,
+  });
 
   useEffect(() => {
     if (!mapContainer.current) {
@@ -39,85 +35,40 @@ const Map: React.FC<MapProps> = ({
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
-      center: [lng, lat],
-      zoom: ZOOM,
+      style: `https://api.maptiler.com/maps/streets/style.json?key=${API_KEY}`,
+      center: [initialViewState.lng, initialViewState.lat],
+      zoom: initialViewState.zoom,
     });
     map.current.addControl(
       new maplibregl.NavigationControl({ showCompass: true }),
       "top-right"
     );
-
-    marker.current = new maplibregl.Marker({ color: "#383EE1" })
-      .setLngLat([lng, lat])
+    const marker = new maplibregl.Marker({ draggable: true, color: "#383EE1", })
+      .setLngLat([1.8, 48])
       .addTo(map.current);
 
-    marker2.current = new maplibregl.Marker({ color: "#000" })
-      .setLngLat([lng2, lat2])
-      .addTo(map.current);
-  }, []);
-
-  useEffect(() => {
-    if (marker.current && !isNaN(lng) && !isNaN(lat)) {
-      marker.current.setLngLat([lng, lat]);
+    function onDragEnd(event: maplibregl.MapMouseEvent) {
+      const lngLat = marker.getLngLat();
+      setLat(lngLat.lat);
+      setLng(lngLat.lng);
+      console.log("Coordonnées du marqueur :", lngLat.lng, lngLat.lat);
     }
-  }, [lng, lat]);
+    
+    marker.on("dragend", onDragEnd);
 
-  useEffect(() => {
-    if (marker2.current && !isNaN(lng2) && !isNaN(lat2)) {
-      marker2.current.setLngLat([lng2, lat2]);
-    }
-  }, [lng2, lat2]);
+ 
+}, []);
+  
 
   return (
     <div className="map-wrap">
-      <a
-        href="https://www.coordonnees-gps.fr/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Find your adress{" "}
-        <img src="/emplacement.png" alt="point" className="icone" />{" "}
-      </a>
-      <div className="markers">
-        <div className="blueMarker">
-          <h2 style={{ color: "#383EE1" }}>Blue Marker</h2>
-          <label>Longitude</label>
-          <input
-            type="number"
-            value={lng}
-            onChange={(e) => setLng(parseFloat(e.target.value))}
-            placeholder="Longitude"
-          />
-          <br />
-          <label>Latitude</label>
-          <input
-            type="number"
-            value={lat}
-            onChange={(e) => setLat(parseFloat(e.target.value))}
-            placeholder="Latitude"
-          />
+      <div ref={mapContainer} className="map" >
+      <div id="coordinates" className="coordinates">
+        Longitude: {lng.toFixed(2)}
+        <br />
+        Latitude: {lat.toFixed(2)}
         </div>
-        <div className="blackMarker">
-          <h2>Black Marker</h2>
-          <label>Longitude</label>
-          <input
-            type="number"
-            value={lng2}
-            onChange={(e) => setLng2(parseFloat(e.target.value))}
-            placeholder="Longitude"
-          />
-          <br />
-          <label>Latitude</label>
-          <input
-            type="number"
-            value={lat2}
-            onChange={(e) => setLat2(parseFloat(e.target.value))}
-            placeholder="Latitude"
-          />
         </div>
-      </div>
-      <div ref={mapContainer} className="map" />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./weather.css";
+import weatherTranslations from "../data/weatherTranslations.json";
 
 interface WeatherProps {
   lat: number;
@@ -12,7 +13,14 @@ interface WeatherData {
   };
   weather: {
     main: string;
+    description: string;
+    icon: string;
   }[];
+}
+interface WeatherTranslations {
+  conditions: {
+    [key: string]: string;
+  };
 }
 
 const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
@@ -24,7 +32,6 @@ const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data: WeatherData) => {
-          console.log("Données pour coordonnées :", data);
           setWeatherData(data);
         })
         .catch((error) =>
@@ -37,12 +44,34 @@ const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
   }, [lat, lng]);
 
   if (weatherData) {
+    const weatherDescription :string = weatherData.weather[0].description;
+    const translatedWeather: WeatherTranslations =
+      weatherTranslations as WeatherTranslations;
+    const translatedDescription =
+      translatedWeather.conditions[weatherDescription];
     return (
-      <div className="weather">
-        <h1>{weatherData.name}</h1>
+      <div
+        className="weather"
+        style={{
+          backgroundColor:
+            weatherData.weather[0].main === "Clear"
+              ? "rgb(228, 106, 187)"
+              : weatherData.weather[0].main === "Clouds"
+              ? "rgb(128, 186, 183)"
+              : "red",
+        }}
+      >
+        <div className="nameAndCondition">
+          <h1>{weatherData.name}</h1>
+          <img 
+            src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+            alt="Weather Icon" className="imgWeather"
+          />
+        </div>
+
         <div className="info">
           <p>Température : {weatherData.main.temp}°C</p>
-          <p>Condition: {weatherData.weather[0].main}</p>
+          <p>Condition: {translatedDescription}</p>
         </div>
       </div>
     );

@@ -1,4 +1,4 @@
-import React ,{ useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Navbar from "./components/Navbar.tsx";
 import Map from "./components/Map.tsx";
 import "./App.css";
@@ -8,33 +8,16 @@ import Switch from "./components/Switch.tsx";
 function App() {
   const [lat, setLat] = useState(48.4158051);
   const [lng, setLng] = useState(1.8815349);
-  const [lat2, setLat2] = useState(48.8688897);
-  const [lng2, setLng2] = useState(2.330041);
-  const [useBlackMarker, setUseBlackMarker] = useState(false);
 
-  const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setUseBlackMarker(event.target.checked);
-  };
-
-  const coords = useBlackMarker ? { lat: lat2, lng: lng2 } : { lat, lng };
+  
 
   return (
     <div className="App">
       <Navbar />
       <div className="mapWeather">
-        <Map
-          lat={lat}
-          lng={lng}
-          setLat={setLat}
-          setLng={setLng}
-          lat2={lat2}
-          lng2={lng2}
-          setLat2={setLat2}
-          setLng2={setLng2}
-        />
+        <Map lat={lat} lng={lng} setLat={setLat} setLng={setLng} />
         <div className="weatherSwitch">
-          <Weather {...coords} />
-          <Switch label="marker" onChange={handleSwitchChange} />
+          <Weather lat={lat} lng={lng} />
         </div>
       </div>
     </div>

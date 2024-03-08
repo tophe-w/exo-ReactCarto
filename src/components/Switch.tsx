@@ -1,24 +1,26 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import "./switch.css";
 
-interface SwitchProps {
-  label: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+interface Props {
+  switchName: string;
+  useBlackMarker: boolean;
+  onChange: () => void;
 }
 
-const Switch: React.FC<SwitchProps> = ({ label, onChange }) => {
+const Switch: React.FC<Props> = ({ switchName, useBlackMarker, onChange }) => {
   return (
     <div className="container">
-      {label}{" "}
+      {switchName}{" "}
       <div className="toggle-switch">
         <input
           type="checkbox"
           className="checkbox"
-          name={label}
-          id={label}
+          id="input-switch"
           onChange={onChange}
+          aria-label="marker-switch"
+          checked={useBlackMarker}
         />
-        <label className="label" htmlFor={label}>
+        <label className="label" htmlFor="input-switch">
           <span className="inner" />
           <span className="switch" />
         </label>

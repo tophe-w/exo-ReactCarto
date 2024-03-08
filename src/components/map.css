@@ -19,36 +19,26 @@ a {
   height: 30px;
 }
 
-.markers {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  margin: auto;
-  width: 100%;
-}
 
-.markers h2 {
-  text-align: center;
-}
-
-.markers input {
-  margin: 0 10px;
-  height: 30px;
-  font-size: large;
-  border-radius: 5px;
-}
 .map {
-  width: 60%;
-  height: 60%;
+  width: 90%;
+  height: 90%;
   margin: auto;
   border-radius: 5px;
   box-shadow: 0 0 10px #000000;
 }
-.blueMarker ,.blackMarker{
+
+.coordinates {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  padding: 5px 10px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 18px;
+  border-radius: 3px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: auto;
-  margin-bottom: 20px;
+  z-index: 2;
 }
