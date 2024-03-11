@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar.tsx";
 import Map from "./components/Map.tsx";
 import "./App.css";
 import Weather from "./components/Weather.tsx";
-import Switch from "./components/Switch.tsx";
+
 
 function App() {
   const [lat, setLat] = useState(48.4158051);

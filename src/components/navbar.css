@@ -1,12 +1,20 @@
 .heading {
-    margin: 0;
-    padding: 0px;
-    background-color: rgb(43, 119, 226);
-    color: white;
-    text-align: center;
-  }
-  
- h1 {
-    padding: 20px;
-    margin: 0;
-  }
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(43, 119, 226);
+  align-items: center;
+  height: 70px;
+}
+.heading img {
+  width: 50px;
+  height: 50px;
+}
+
+.heading h1 {
+  padding: 20px;
+  text-align: center;
+  margin: 0;
+  margin-left: 100px;
+  margin-right: 100px;
+  color: white;
+}

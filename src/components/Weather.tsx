@@ -44,28 +44,28 @@ const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
   }, [lat, lng]);
 
   if (weatherData) {
-    const weatherDescription :string = weatherData.weather[0].description;
-    const translatedWeather: WeatherTranslations =
-      weatherTranslations as WeatherTranslations;
-    const translatedDescription =
-      translatedWeather.conditions[weatherDescription];
+    console.log(weatherData.weather[0])
+    const weatherDescription: string = weatherData.weather[0].description; 
+    const translatedWeather: WeatherTranslations = weatherTranslations;
+    const translatedDescription = translatedWeather.conditions[weatherDescription];
     return (
       <div
         className="weather"
         style={{
           backgroundColor:
             weatherData.weather[0].main === "Clear"
-              ? "rgb(228, 106, 187)"
+              ? "rgb(238, 241, 8, 0.753)"
               : weatherData.weather[0].main === "Clouds"
               ? "rgb(128, 186, 183)"
-              : "red",
+              : "rgb(135, 206, 250)",
         }}
       >
         <div className="nameAndCondition">
           <h1>{weatherData.name}</h1>
-          <img 
+          <img
             src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-            alt="Weather Icon" className="imgWeather"
+            alt="Weather Icon"
+            className="imgWeather"
           />
         </div>
 
