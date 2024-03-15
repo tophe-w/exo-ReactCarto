@@ -1,0 +1,18 @@
+
+    map.current?.on("click", function (e) {
+      console.log("Coordonnées cliquées : ", e.lngLat);
+      if (marker) {
+        marker.remove();
+      }
+
+      // Créer un nouveau marqueur à la position cliquée
+      const newMarker = new maplibregl.Marker({
+        color: "#383EE1",
+        draggable: true,
+      }).setLngLat(e.lngLat);
+
+      if (map.current) {
+        newMarker.addTo(map.current);
+      }
+    });
+  }, []);

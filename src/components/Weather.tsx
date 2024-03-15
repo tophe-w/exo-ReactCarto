@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./weather.css";
+import "./weather.scss";
 import weatherTranslations from "../data/weatherTranslations.json";
 
 interface WeatherProps {
-  lat: number;
-  lng: number;
+  lngLat: number[];
 }
 interface WeatherData {
   name: string;
@@ -23,12 +22,12 @@ interface WeatherTranslations {
   };
 }
 
-const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
+const Weather: React.FC<WeatherProps> = ({ lngLat }) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   useEffect(() => {
-    if (lat && lng) {
-      const apiUrl = `${process.env.REACT_APP_API_URL}/weather?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+    if (lngLat) {
+      const apiUrl = `${process.env.REACT_APP_API_URL}/weather?lat=${lngLat[1]}&lon=${lngLat[0]}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data: WeatherData) => {
@@ -41,24 +40,31 @@ const Weather: React.FC<WeatherProps> = ({ lat, lng }) => {
           )
         );
     }
-  }, [lat, lng]);
+  }, [lngLat]);
 
   if (weatherData) {
-    console.log(weatherData.weather[0])
-    const weatherDescription: string = weatherData.weather[0].description; 
+    const weatherDescription: string = weatherData.weather[0].description;
     const translatedWeather: WeatherTranslations = weatherTranslations;
-    const translatedDescription = translatedWeather.conditions[weatherDescription];
+    const translatedDescription =
+      translatedWeather.conditions[weatherDescription];
+
     return (
       <div
-        className="weather"
-        style={{
-          backgroundColor:
-            weatherData.weather[0].main === "Clear"
-              ? "rgb(238, 241, 8, 0.753)"
-              : weatherData.weather[0].main === "Clouds"
-              ? "rgb(128, 186, 183)"
-              : "rgb(135, 206, 250)",
-        }}
+        className={`weather ${
+          weatherData.weather[0].main === "Clear"
+            ? "clear"
+            : weatherData.weather[0].main === "Clouds"
+            ? "clouds"
+            : weatherData.weather[0].main === "Snow"
+            ? "snow"
+            : weatherData.weather[0].main === "Thunderstorm"
+            ? "thunderstorm"
+            : weatherData.weather[0].main === "Drizzle"
+            ? "drizzle"
+            : weatherData.weather[0].main === "Rain"
+            ? "rain"
+            : ""
+        }`}
       >
         <div className="nameAndCondition">
           <h1>{weatherData.name}</h1>

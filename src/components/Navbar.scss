@@ -18,3 +18,18 @@
   margin-right: 100px;
   color: white;
 }
+
+@media screen and (max-width: 768px) {
+  .heading img {
+    display: none;
+  }
+  .heading h1 {
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    margin-left: 0px;
+    margin-right: 0px;
+    color: white;
+    font-size: 1.5em;
+  }
+}

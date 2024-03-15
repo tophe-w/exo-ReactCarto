@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import maplibregl from "maplibre-gl";
+import maplibregl, { Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import "./Map.css";
+import "./Map.scss";
 
 const ZOOM: number = 10;
 const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
@@ -12,15 +12,11 @@ const initialViewState = {
 };
 
 interface MapProps {
-  lat: number;
-  lng: number;
-  setLat: React.Dispatch<React.SetStateAction<number>>;
-  setLng: React.Dispatch<React.SetStateAction<number>>;
+  lngLat: number[];
+  setLngLat: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-
-
-const Map: React.FC<MapProps> = ({ lat, lng, setLat, setLng }) => {
+const Map: React.FC<MapProps> = ({ lngLat, setLngLat }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<maplibregl.Map | null>(null);
   const markerCoordinates = useRef<{ lat: number; lng: number }>({
@@ -43,32 +39,42 @@ const Map: React.FC<MapProps> = ({ lat, lng, setLat, setLng }) => {
       new maplibregl.NavigationControl({ showCompass: true }),
       "top-right"
     );
-    const marker = new maplibregl.Marker({ draggable: true, color: "#383EE1", })
-      .setLngLat([1.8, 48])
+    map.current.addControl(new maplibregl.FullscreenControl({}));
+    map.current.addControl(
+      new maplibregl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+      })
+    );
+    let marker = new maplibregl.Marker({ draggable: true, color: "#383EE1" })
+      .setLngLat([1.8815349, 48.4158051])
       .addTo(map.current);
 
-    function onDragEnd(event: maplibregl.MapMouseEvent) {
-      const lngLat = marker.getLngLat();
-      setLat(lngLat.lat);
-      setLng(lngLat.lng);
-      console.log("Coordonnées du marqueur :", lngLat.lng, lngLat.lat);
-    }
-    
-    marker.on("dragend", onDragEnd);
-
- 
-}, []);
-  
+    map.current?.on("click", function (e) {
+      console.log("Coordonnées cliquées : ", e.lngLat);
+      if (marker) {
+        marker.remove();
+      }
+      marker = new maplibregl.Marker({ color: "#383EE1" });
+      marker.setLngLat(e.lngLat);
+      if (map.current) {
+        marker.addTo(map.current);
+        setLngLat([e.lngLat.lng, e.lngLat.lat]);
+      }
+    });
+  }, []);
 
   return (
     <div className="map-wrap">
-      <div ref={mapContainer} className="map" >
-      <div id="coordinates" className="coordinates">
-        Longitude: {lng.toFixed(2)}
-        <br />
-        Latitude: {lat.toFixed(2)}
+      <div ref={mapContainer} className="map">
+        <div id="coordinates" className="coordinates">
+          Longitude: {lngLat[0].toFixed(2)}
+          <br />
+          Latitude: {lngLat[1].toFixed(2)}
         </div>
-        </div>
+      </div>
     </div>
   );
 };

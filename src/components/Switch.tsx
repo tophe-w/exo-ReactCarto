@@ -1,5 +1,5 @@
 import React from "react";
-import "./switch.css";
+import "./switch.scss";
 
 interface Props {
   switchName: string;
