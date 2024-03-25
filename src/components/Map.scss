@@ -5,39 +5,29 @@
   align-items: center;
   width: 70%;
   height: calc(100vh - 100px);
-}
 
-a {
-  margin: auto;
-  color: #000000;
-  font-size: large;
-}
-.icone {
-  width: 30px;
-  height: 30px;
-}
+  .map {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+  }
 
-.map {
-  width: 90%;
-  height: 90%;
-  margin: auto;
-  border-radius: 5px;
-  box-shadow: 0 0 10px #000000;
-}
-
-.coordinates {
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-  padding: 5px 10px;
-  margin: 0;
-  font-size: 11px;
-  line-height: 18px;
-  border-radius: 3px;
-  display: flex;
-  z-index: 2;
+  .coordinates {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 11px;
+    line-height: 18px;
+    border-radius: 3px;
+    display: flex;
+    z-index: 2;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -45,13 +35,14 @@ a {
     width: 100%;
     height: calc(100vh - 400px);
     margin: 2px;
-  }
-  .map {
-    width: 98%;
-    height: 100%;
-    margin: auto;
-    border: #000000 solid 1px;
-    border-radius: none;
-    box-shadow: none;
+
+    .map {
+      width: 98%;
+      height: 100%;
+      margin: auto;
+      border: #000000 solid 1px;
+      border-radius: none;
+      box-shadow: none;
+    }
   }
 }

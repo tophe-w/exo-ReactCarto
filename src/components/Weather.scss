@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 80%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -11,41 +11,52 @@
   text-align: center;
   margin-top: 120px;
   margin-right: 0px;
+}
+
+.other {
   background-color: rgb(238, 0, 255);
 }
+
 .Thunderstorm {
   background-color: #08598b;
 }
+
 .clear {
   background-color: #08598b;
 }
+
 .clouds {
   background-color: rgb(77, 200, 209);
 }
+
 .snow {
   background-color: #02f971;
 }
+
 .rain {
   background-color: #581f9e;
 }
+
 .drizzle {
   background-color: #83bd08;
 }
 
-.nameAndCondition {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  width: 95%;
-}
-
-.weather h1 {
+h1 {
   margin: 0;
   padding: 0;
   font-size: 40px;
   color: white;
   width: 50%;
+  margin-right: 5px;
+}
+
+
+.nameAndCondition {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
 }
 
 .imgWeather {
@@ -55,6 +66,7 @@
   border-radius: 40%;
   margin-bottom: 20px;
 }
+
 .info {
   display: flex;
   justify-content: space-around;
@@ -69,6 +81,7 @@
   background-color: white;
 }
 
+
 @media screen and (max-width: 768px) {
   .weather {
     display: flex;
@@ -77,19 +90,55 @@
     align-items: center;
     width: 90%;
     height: 70%;
-    border-radius:none;
+    border-radius: none;
     box-shadow: none;
     padding: 0px;
     text-align: center;
     margin: 2px;
   }
+
+  .Thunderstorm {
+    background-color: transparent;
+  }
+
+  .clear {
+    background-color: transparent;
+  }
+
+  .clouds {
+    background-color: transparent;
+  }
+
+  .snow {
+    background-color: transparent;
+  }
+
+  .rain {
+    background-color: transparent;
+  }
+
+  .drizzle {
+    background-color: transparent;
+  }
+  .other{
+    background-color: transparent;
+  }
+
+  h1 {
+    color: black;
+    font-size: 1.5em;
+  }
+
+
+
   .nameAndCondition {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    width: 60%;
-      }
+    margin-top: 20px;
+  }
+
   .info {
     display: flex;
     flex-direction: column;
@@ -103,12 +152,13 @@
     box-shadow: none;
     text-align: center;
     background-color: transparent;
-     }
+  }
+
   .imgWeather {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 40%;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
 }

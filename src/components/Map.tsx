@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import maplibregl, { Marker } from "maplibre-gl";
+import maplibregl, { MapMouseEvent, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.scss";
+import { MapProps, WeatherData } from "./TypeData";
 
 const ZOOM: number = 10;
 const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
@@ -11,18 +12,29 @@ const initialViewState = {
   zoom: 3.5,
 };
 
-interface MapProps {
-  lngLat: number[];
-  setLngLat: React.Dispatch<React.SetStateAction<number[]>>;
-}
-
-const Map: React.FC<MapProps> = ({ lngLat, setLngLat }) => {
+const Map: React.FC<MapProps> = ({ lngLat, setLngLat, weatherData }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const markerCoordinates = useRef<{ lat: number; lng: number }>({
-    lat: initialViewState.lat,
-    lng: initialViewState.lng,
-  });
+
+  function createPopupOnMapClick(e: MapMouseEvent) {
+    const lngLat = e.lngLat;
+    console.log("Coordonnées cliquées : ", lngLat);
+    const popup = new maplibregl.Popup();
+    if (map.current) {
+      popup.setLngLat(lngLat);
+      setLngLat([e.lngLat.lng, e.lngLat.lat]);
+      popup.addTo(map.current);
+      popup.setHTML(`
+  <div>
+    <p>Longitude: ${lngLat.lng.toFixed(2)}</p>
+    <p>Latitude: ${lngLat.lat.toFixed(2)}</p>
+    <img src="http://openweathermap.org/img/wn/${
+      weatherData?.weather[0].icon
+    }.png" alt="Weather Icon">
+  </div>
+`);
+    }
+  }
 
   useEffect(() => {
     if (!mapContainer.current) {
@@ -31,7 +43,7 @@ const Map: React.FC<MapProps> = ({ lngLat, setLngLat }) => {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
       center: [initialViewState.lng, initialViewState.lat],
       zoom: initialViewState.zoom,
     });
@@ -48,23 +60,34 @@ const Map: React.FC<MapProps> = ({ lngLat, setLngLat }) => {
         trackUserLocation: true,
       })
     );
-    let marker = new maplibregl.Marker({ draggable: true, color: "#383EE1" })
-      .setLngLat([1.8815349, 48.4158051])
-      .addTo(map.current);
-
-    map.current?.on("click", function (e) {
-      console.log("Coordonnées cliquées : ", e.lngLat);
-      if (marker) {
-        marker.remove();
-      }
-      marker = new maplibregl.Marker({ color: "#383EE1" });
-      marker.setLngLat(e.lngLat);
-      if (map.current) {
-        marker.addTo(map.current);
-        setLngLat([e.lngLat.lng, e.lngLat.lat]);
-      }
-    });
   }, []);
+
+  // let marker = new maplibregl.Marker({ draggable: true, color: "#383EE1" })
+  //   .setLngLat([1.8815349, 48.4158051])
+  //   .addTo(map.current);
+
+  useEffect(() => {
+    if (!map.current) {
+      return;
+    }
+    map.current.on("click", createPopupOnMapClick);
+
+    //   if (marker) {
+
+    //     marker.remove();
+    //   }
+
+    //   marker = new maplibregl.Marker({ color: "#383EE1" });
+    //   marker.setLngLat(e.lngLat);
+    //   if (map.current) {
+    //     marker.addTo(map.current);
+    //     setLngLat([e.lngLat.lng, e.lngLat.lat]);
+    //   }
+    // });
+    return () => {
+      map.current?.off("click", createPopupOnMapClick);
+    };
+  }, [weatherData]);
 
   return (
     <div className="map-wrap">

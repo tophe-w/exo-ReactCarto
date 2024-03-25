@@ -7,6 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
@@ -25,8 +26,9 @@ code {
   justify-content: space-around;
   flex-direction: column-reverse;
   align-items: center;
-  height: 50%;
+  height: 100%;
   margin: auto;
+  width: 25%;
 }
 
 @media screen and (max-width: 768px) {
@@ -45,5 +47,8 @@ code {
     align-items: center;
     height: 100%;
     margin: 0.2px;
+    width: 100%;
+    margin-top: 15%;
+     
   }
 }

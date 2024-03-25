@@ -1,37 +1,49 @@
 import React, { useEffect, useState } from "react";
 import "./weather.scss";
 import weatherTranslations from "../data/weatherTranslations.json";
+import { WeatherData, WeatherProps, WeatherTranslations } from "./TypeData";
 
-interface WeatherProps {
-  lngLat: number[];
-}
-interface WeatherData {
-  name: string;
-  main: {
-    temp: number;
-  };
-  weather: {
-    main: string;
-    description: string;
-    icon: string;
-  }[];
-}
-interface WeatherTranslations {
-  conditions: {
-    [key: string]: string;
-  };
+
+const OPENWEATHER_API_URL = "https://api.openweathermap.org/data/2.5";
+
+function getCssWeatherClass(weatherData: WeatherData) {
+  let weatherClass = "";
+  switch (weatherData.weather[0].main) {
+    case "Clear":
+      weatherClass = "clear";
+      break;
+    case "Clouds":
+      weatherClass = "clouds";
+      break;
+    case "Snow":
+      weatherClass = "snow";
+      break;
+    case "Thunderstorm":
+      weatherClass = "thunderstorm";
+      break;
+    case "Drizzle":
+      weatherClass = "drizzle";
+      break;
+    case "Rain":
+      weatherClass = "rain";
+      break;
+    default:
+      weatherClass = "other";
+  }
+  return weatherClass;
 }
 
-const Weather: React.FC<WeatherProps> = ({ lngLat }) => {
+const Weather: React.FC<WeatherProps> = ({ lngLat, onWeatherDataReceived }) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   useEffect(() => {
     if (lngLat) {
-      const apiUrl = `${process.env.REACT_APP_API_URL}/weather?lat=${lngLat[1]}&lon=${lngLat[0]}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+      const apiUrl = `${OPENWEATHER_API_URL}/weather?lat=${lngLat[1]}&lon=${lngLat[0]}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data: WeatherData) => {
           setWeatherData(data);
+          onWeatherDataReceived(data);
         })
         .catch((error) =>
           console.error(
@@ -42,30 +54,21 @@ const Weather: React.FC<WeatherProps> = ({ lngLat }) => {
     }
   }, [lngLat]);
 
+  useEffect(() => {
+    if (weatherData) {
+      onWeatherDataReceived(weatherData);
+    }
+  }, [weatherData, onWeatherDataReceived]);
+
   if (weatherData) {
     const weatherDescription: string = weatherData.weather[0].description;
     const translatedWeather: WeatherTranslations = weatherTranslations;
     const translatedDescription =
-      translatedWeather.conditions[weatherDescription];
+      translatedWeather.conditions[weatherDescription].charAt(0).toUpperCase() +
+      translatedWeather.conditions[weatherDescription].slice(1);
 
     return (
-      <div
-        className={`weather ${
-          weatherData.weather[0].main === "Clear"
-            ? "clear"
-            : weatherData.weather[0].main === "Clouds"
-            ? "clouds"
-            : weatherData.weather[0].main === "Snow"
-            ? "snow"
-            : weatherData.weather[0].main === "Thunderstorm"
-            ? "thunderstorm"
-            : weatherData.weather[0].main === "Drizzle"
-            ? "drizzle"
-            : weatherData.weather[0].main === "Rain"
-            ? "rain"
-            : ""
-        }`}
-      >
+      <div className={`weather ${getCssWeatherClass(weatherData)}`}>
         <div className="nameAndCondition">
           <h1>{weatherData.name}</h1>
           <img
