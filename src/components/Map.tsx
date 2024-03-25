@@ -5,7 +5,6 @@ import "./Map.scss";
 import { MapProps, WeatherData } from "./TypeData";
 
 const ZOOM: number = 10;
-const API_KEY: string = "nMRnsGMXjAaVfcwJhzLn";
 const initialViewState = {
   lat: 48,
   lng: 1.8,
@@ -43,7 +42,7 @@ const Map: React.FC<MapProps> = ({ lngLat, setLngLat, weatherData }) => {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/satellite/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/satellite/style.json?key=${process.env.MAPLIBRE_API_KEY}`,
       center: [initialViewState.lng, initialViewState.lat],
       zoom: initialViewState.zoom,
     });
