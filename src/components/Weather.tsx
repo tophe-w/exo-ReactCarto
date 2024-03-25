@@ -38,7 +38,7 @@ const Weather: React.FC<WeatherProps> = ({ lngLat, onWeatherDataReceived }) => {
 
   useEffect(() => {
     if (lngLat) {
-      const apiUrl = `${OPENWEATHER_API_URL}/weather?lat=${lngLat[1]}&lon=${lngLat[0]}&appid=${process.env.REACT_APP_API_KEY}&units=metric`;
+      const apiUrl = `${OPENWEATHER_API_URL}/weather?lat=${lngLat[1]}&lon=${lngLat[0]}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`;
       fetch(apiUrl)
         .then((response) => response.json())
         .then((data: WeatherData) => {
