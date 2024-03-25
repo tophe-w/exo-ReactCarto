@@ -1,8 +1,11 @@
 const path = require("path");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
+dotenv.config();
 module.exports = {
   entry: {
-    main: "./src/index.jsx",
+    main: "./src/Index.tsx",
   },
   output: {
     filename: "bundle.js",
@@ -11,19 +14,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jsx|js)$/,
-        include: path.resolve(__dirname, "src"),
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-          },
-        ],
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
-        test: /\.css$/i,
+        test: /\.css$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
+  resolve: { extensions: [".js", ".jsx", ".ts", ".tsx"] },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
+    }),
+  ],
 };

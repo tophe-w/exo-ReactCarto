@@ -2,12 +2,14 @@
   "name": "sdk_carto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "index.tsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
     "start": "webpack serve --open --mode development",
-    "build:prod": "webpack --node-env=production",
-    "build:dev": "webpack --node-env=development"
+    "build:prod": "npm run type-check && webpack --node-env=production",
+    "build:dev": "npm run type-check && webpack --node-env=development",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,18 +26,38 @@
     "@babel/core": "^7.23.5",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^17.0.75",
+    "@types/react-dom": "^18.2.18",
     "babel-loader": "^8.3.0",
-    "css-loader": "^1.0.0",
+    "css-loader": "^6.10.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
+    "node-fetch": "^3.3.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11",
-    "style-loader": "^0.23.0",
-    "webpack": "^5.89.0",
+    "sass": "^1.72.0",
+    "sass-loader": "^14.1.1",
+    "style-loader": "^3.3.4",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@testing-library/user-event": "^14.5.2",
+    "dotenv": "^16.3.1",
+    "jsdom": "^24.0.0",
     "lodash": "^4.17.21",
-    "maplibre-gl": "^3.6.2"
+    "maplibre-gl": "^2.4.0",
+    "react-map-gl": "^7.1.7"
   }
 }
