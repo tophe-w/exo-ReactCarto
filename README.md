@@ -28,10 +28,16 @@ L'objectif de l'application "Explorer le Globe et sa Météo" est de permettre �
 1. Ouvrir l'application dans un navigateur web.
 2. Cliquer sur la carte pour obtenir les informations météorologiques de l'endroit sélectionné.
 
+
 ## Sécurité
 
 - Veillez à recupérer une clé API sur OpenWeather.
 - Veillez à recupérer une clé API sur Maplibre.
+- Créer un fichier `.env` à la racine du projet et ajouter les clés API 
+
+Voir le fichier [`.env.example`](.env.example) pour plus de détails.
+
+
 
 ## Licence
 
