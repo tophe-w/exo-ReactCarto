@@ -19,7 +19,7 @@ L'objectif de l'application "Explorer le Globe et sa Météo" est de permettre �
 
 ## Installation
 
-1. Cloner le projet : `git clone <URL_DU_PROJET>`
+1. Cloner le projet : `git clone [<URL_DU_PROJET>](https://github.com/tophe-w/exo-ReactCarto.git)`
 2. Installer les dépendances : `npm install`
 3. Lancer l'application : `npm start`
 
